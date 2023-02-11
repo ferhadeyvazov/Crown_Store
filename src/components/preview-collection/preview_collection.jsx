@@ -15,7 +15,7 @@ const Preview_collection = ({ title, items }) => {
             .map(({ id, ...otherItemProps }) => (
               <CollectionItem key={id} {...otherItemProps} />
             ))
-        }
+        } 
       </div>
     </div>
   )
