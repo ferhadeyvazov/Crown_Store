@@ -1,22 +1,35 @@
-import { useState, useEffect} from 'react';
+import React, { useState, useEffect} from 'react';
 
 import './App.css';
 import Routes from './components/Routes/Routes';
 import Header from './components/header/Header';
 
-import { auth } from './Firebase/firebase.utils' 
+import { auth, createUserProfileDocument, db } from './Firebase/firebase.utils' 
+import { collection, getDocs } from 'firebase/firestore';
+
 
 function App() {
 const [currentUser, setCurrentUser] = useState(null);
+const [users, setUsers] = useState([]);
+
+const data = collection(db, 'users');
 
 useEffect(()=>{
-  auth.onAuthStateChanged(user=>{
+  auth.onAuthStateChanged(async (user)=>{
     setCurrentUser(user);
-    console.log(user);
+    createUserProfileDocument(user);
+
+    // =================================================================================================
+      // READ THE DATA
+    const datas = await getDocs(data);
+    setUsers(datas.docs.map((doc)=>({...doc.data(), id: doc.id})));
   })
 },[currentUser]);
 
-  return (
+console.log(users);
+// Salam
+
+return (
     <div className="App">
       <Header currentUser={currentUser} />
       <Routes />

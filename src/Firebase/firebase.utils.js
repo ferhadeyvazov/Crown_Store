@@ -2,6 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
+
 const firebaseConfig = {
     apiKey: "AIzaSyBmT9RzPgWi9YRLuoCSKsKnvtNEx7ZlswY",
     authDomain: "crown-db-82ace.firebaseapp.com",
@@ -12,10 +13,16 @@ const firebaseConfig = {
     measurementId: "G-4D6MCPM5ZF"
 }
 
+export const createUserProfileDocument = async (userAuth, additionalData)=>{
+    if(!userAuth)return;
+
+    
+}
+
 const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
-const db = getFirestore(app);
+export const db = getFirestore(app);
 
 const provider = new GoogleAuthProvider();
 provider.setCustomParameters({ prompt: 'select_account' });
